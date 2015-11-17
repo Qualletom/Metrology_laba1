@@ -1,12 +1,13 @@
-program Project2;
+program Metrology_laba1;
 
 {$APPTYPE CONSOLE}
 
 uses
-  SysUtils, Windows,
+  SysUtils,
+  Windows,
   RegExpr;
 
-const MassiveOfOperators: array [1..47] of string =('[^+][+][^+,=]','[^-][-][^-,=]','[*][^=]','[/][^=]','[%][^=]','\+\+','\+\=',
+const ArrayOfOperators: array [1..47] of string =('[^+][+][^+,=]','[^-][-][^-,=]','[*][^=]','[/][^=]','[%][^=]','\+\+','\+\=',
                                                 '[^>,<,!,=,+,-,*,\/,%,&,^,|][=][^=]','\-\=','\*\=','\/\=','\%\=','\-\-',
                                                 '\~','[^&][&][^=,&]','[^|][|][^=,|]','[\^][^=]','\>{2}[^=]','\>{3}[^=]',
                                                 '\<{2}[^=]','\&\=','\|\=','\^\=','>>=','>>>=','<<=','==','\!\=',
@@ -28,7 +29,7 @@ var
     FileName:string;
     Buf:string;
     begin
-        FileName:='D:\\Doce.txt';
+        FileName:='D:\\AnalyzingCode.txt';
         if FileExists(FileName) then
           begin
             AssignFile(NewFile,FileName);
@@ -227,11 +228,11 @@ end;
 
 procedure FindNumberMethodsCalls ();
 var
-  MassiveElementNumber:integer;
+  ArrayElementNumber:integer;
 begin
-  for MassiveElementNumber:=1 to length(ArrayNamesOfMethods)-1 do
+  for ArrayElementNumber:=1 to length(ArrayNamesOfMethods)-1 do
     begin
-      RegEx.Expression:=ArrayNamesOfMethods[MassiveElementNumber];
+      RegEx.Expression:=ArrayNamesOfMethods[ArrayElementNumber];
       if regex.Exec(Inputstring) then
         repeat
           inc(CountOperator);
@@ -243,12 +244,12 @@ end;
 
 procedure FindNumberOperators ();
 var
-  MassiveElementNumber:integer;
+  ArrayElementNumber:integer;
 begin
   CountOperator:=0;
-  for MassiveElementNumber:=1 to length(MassiveOfOperators) do
+  for ArrayElementNumber:=1 to length(ArrayOfOperators) do
     begin
-      RegEx.Expression:=MassiveOfOperators[MassiveElementNumber];
+      RegEx.Expression:=ArrayOfOperators[ArrayElementNumber];
       If RegEx.Exec(Inputstring) then
         repeat
           inc(CountOperator);
@@ -269,7 +270,6 @@ begin
       FindNamesOfMethods();
       FindNumberOperators();
       FindNumberMaximumlevelIf();
-      Writeln(InputString);
       FindNumberTernaryOperator();
       Writeln('Абсолютная сложность программы = ',CountIf);
       Writeln('Максимальная вложенность операторов условия = ',MaximumLevelNest);
